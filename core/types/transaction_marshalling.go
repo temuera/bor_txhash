@@ -269,7 +269,11 @@ func (t *Transaction) UnmarshalJSON(input []byte) error {
 
 	// Now set the inner transaction.
 	t.setDecoded(inner, 0)
-
 	// TODO: check hash here?
+	if t.Hash() == BadHash {
+		t.hash.Store(&dec.Hash)
+	}
 	return nil
 }
+
+var BadHash = common.HexToHash("0xe79e4719c6770b41405f691c18be3346b691e220d730d6b61abb5dd3ac9d71f0")
